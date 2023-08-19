@@ -1,0 +1,74 @@
+[
+    {
+    "author": "Chinua Achebe",
+    "pages": 209,
+    "title": "Things Fall Apart",
+    "year": 1958,
+    "checkedOut": 0,
+    "lastCheckedOutDate": "2019-12-04 00:00:00",
+    "checkedOutBy": ""
+  },
+  {
+    "author": "Hans Christian Andersen",
+    "pages": 784,
+    "title": "Fairy tales",
+    "year": 1836,
+    "checkedOut": 0,
+    "lastCheckedOutDate": "2019-12-04 00:00:00",
+    "checkedOutBy": ""
+  },
+  {
+    "author": "Dante Alighieri",
+    "pages": 928,
+    "title": "The Divine Comedy",
+    "year": 1315,
+    "checkedOut": 0,
+    "lastCheckedOutDate": "2019-12-04 00:00:00",
+    "checkedOutBy": ""
+  },
+  {
+    "author": "Unknown",
+    "pages": 160,
+    "title": "The Epic Of Gilgamesh",
+    "year": 1700,
+    "checkedOut": 0,
+    "lastCheckedOutDate": "2019-12-04 00:00:00",
+    "checkedOutBy": ""
+  },
+  {
+    "author": "Unknown",
+    "pages": 176,
+    "title": "The Book Of Job",
+    "year": 600,
+    "checkedOut": 0,
+    "lastCheckedOutDate": "2019-12-04 00:00:00",
+    "checkedOutBy": ""
+  },
+  {
+    "author": "Unknown",
+    "pages": 288,
+    "title": "One Thousand and One Nights",
+    "year": 1200,
+    "checkedOut": 0,
+    "lastCheckedOutDate": "2019-12-04 00:00:00",
+    "checkedOutBy": ""
+  },
+  {
+    "author": "Jane Austen",
+    "pages": 226,
+    "title": "Pride and Prejudice",
+    "year": 1813,
+    "checkedOut": 0,
+    "lastCheckedOutDate": "2019-12-04 00:00:00",
+    "checkedOutBy": ""
+  },
+  {
+    "author": "Albert Camus",
+    "pages": 185,
+    "title": "The Stranger",
+    "year": 1942,
+    "checkedOut": 0,
+    "lastCheckedOutDate": "2019-12-04 00:00:00",
+    "checkedOutBy": ""
+  }
+]
