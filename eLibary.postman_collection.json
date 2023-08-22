@@ -64,7 +64,8 @@
 							"})\r",
 							"\r",
 							"var jsonData = JSON.parse(responseBody);\r",
-							"pm.globals.set(\"token\", jsonData.result);\r",
+							"pm.globals.set(\"token\", jsonData[\"token\"]);\r",
+							"pm.globals.set(\"cardId\", jsonData[\"cardId\"]);\r",
 							""
 						],
 						"type": "text/javascript"
@@ -76,12 +77,12 @@
 				"header": [
 					{
 						"key": "username",
-						"value": "boston",
+						"value": "b",
 						"type": "default"
 					},
 					{
 						"key": "password",
-						"value": "Globe",
+						"value": "b",
 						"type": "default"
 					},
 					{
@@ -115,27 +116,93 @@
 			"response": []
 		},
 		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is ok\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.globals.set(\"token\", jsonData[\"token\"]);\r",
+							"pm.globals.set(\"cardId\", jsonData[\"cardId\"]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"b\",\r\n    \"password\": \"b\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/v1/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get User Info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is ok\",  ()=>{\r",
+							"    pm.response.to.have.status(200)\r",
+							"})\r",
+							"\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.globals.set(\"cardId\", jsonData[\"cardId\"]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "default"
+					}
+				],
 				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "default"
-						},
-						{
-							"key": "username",
-							"value": "boston",
-							"type": "default"
-						}
-					],
+					"mode": "raw",
+					"raw": "{\"username\": \"b\"}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -213,26 +280,16 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "default"
+					}
+				],
 				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "cardId",
-							"value": "b2bb8cba8cb64dcaaa7ed6af4598f04d",
-							"type": "default"
-						},
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "default"
-						},
-						{
-							"key": "bookTitle",
-							"value": "The Stranger",
-							"type": "default"
-						}
-					],
+					"mode": "raw",
+					"raw": "{\r\n    \"bookTitle\": \"The Stranger\",\r\n    \"cardId\": \"{{cardId}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -278,26 +335,16 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "default"
+					}
+				],
 				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "cardId",
-							"value": "b2bb8cba8cb64dcaaa7ed6af4598f04d",
-							"type": "default"
-						},
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "default"
-						},
-						{
-							"key": "bookTitle",
-							"value": "The Stranger",
-							"type": "default"
-						}
-					],
+					"mode": "raw",
+					"raw": "{\r\n    \"bookTitle\": \"The Stranger\",\r\n    \"cardId\": \"{{cardId}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
