@@ -4,9 +4,10 @@
 # eLibrary Project with Login, Checkout, and Checking functionality. This functionality can be done via Postman and eventually
 # a client application or more. The tech used is Mongo repo, Python and Flask, and an attached Postman collection.
 from repository import *
-from flask import Flask, request, Response
+from flask import Flask, request, Response, g
 import sys
-
+from functools import wraps
+from validation import validation
 
 # adding Mongorepo to the system path
 sys.path.insert(0, "./mongorepo")
@@ -46,13 +47,10 @@ Endpoint: v1/user
 Request body keys: token, username
 '''
 @app.route("/v1/user", methods=["GET"])
+@validation(repo)
 def get_user_info(): 
     try:
-      token = request.headers["Authorization"]
-      if repo.Authorize(token):
-        return repo.GetUserInfo(request.json["username"], token)
-      else:
-        return Response(response="Session expired, please login", status=400)
+      return repo.GetUserInfo(request.json["username"], g.token)
     except:
       return Response(response="Server error", status=500)
 
@@ -86,16 +84,14 @@ Endpoint: v1/checkin
 Request body keys: token, bookTitle, cardId
 '''
 @app.route("/v1/checkin", methods=["POST"])
+@validation(repo)
 def checkin():
     try:
-      if repo.Authorize(request.headers["Authorization"]):
-        book = repo.checkIn(request.json["bookTitle"], request.json["cardId"])
-        if len(book) == 0:
-          return Response(response="Already checked in.", status=400)
-        else:
-          return book
+      book = repo.checkIn(request.json["bookTitle"], request.json["cardId"])
+      if len(book) == 0:
+        return Response(response="Already checked in.", status=400)
       else:
-        return Response(response="Unsuccessful", status=400)
+        return book
     except:
       return Response(response="Server error", status=500)
 
@@ -105,18 +101,16 @@ Endpoint: v1/checkout
 Request body keys: token, bookTitle, cardId
 '''
 @app.route("/v1/checkout", methods=["POST"])
-def checkout(): 
+@validation(repo)
+def checkout():
     try:
-      if repo.Authorize(request.headers["Authorization"]):
-        title = request.json['bookTitle']
-        cardId = request.json['cardId']
-        book = repo.checkOut(title, cardId)
-        if len(book) == 0:
-          return Response(response="Already checked out.", status=400)
-        else:
-          return book
+      title = request.json['bookTitle']
+      cardId = request.json['cardId']
+      book = repo.checkOut(title, cardId)
+      if len(book) == 0:
+        return Response(response="Already checked out.", status=400)
       else:
-        return Response(response="Unsuccessful", status=400)
+        return book
     except:
       return Response(response="Server error", status=500)
 

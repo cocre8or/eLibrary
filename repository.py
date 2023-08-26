@@ -50,22 +50,7 @@ class repository:
       return self.CreateUser(username, password, email_address)
     else:
       return None
-  
-  # Validates session tokens
-  def Authorize(self, token):
-    try:
-      query = {"token": token }
-      user = self.eLibraryUsers.find_one(query, {"_id": 0, "loginExpiration":1 })
-      if user == None:
-        return False
-      date_format = "%Y-%m-%d %H:%M:%S"
-      date_of_expiration_str = str(datetime.datetime.strptime(user["loginExpiration"], date_format))
-      date_of_expiration = datetime.datetime.strptime(date_of_expiration_str, date_format)
-      if date_of_expiration > datetime.datetime.now():
-        return True 
-    except:
-      return False
-  
+
   # Get a new session token, helper function
   def GetToken(self, pwd):
     try:
