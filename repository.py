@@ -124,7 +124,9 @@ class repository:
   
   #region BOOK Transactions
   def viewBooks(self):
-    return dumps(self.eLibraryBooks.find({}, {"_id": 0}))
+    books = {};
+    books['books'] = self.eLibraryBooks.find({}, {"_id": 0});
+    return dumps(books)
   
   # check out a book
   def checkOut(self, bookTitle, cardId):

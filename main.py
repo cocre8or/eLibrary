@@ -8,19 +8,23 @@ from flask import Flask, request, Response, g
 import sys
 from functools import wraps
 from validation import validation
+from flask_cors import CORS,cross_origin
 
 # adding Mongorepo to the system path
 sys.path.insert(0, "./mongorepo")
 
 #flask --app hello run
 app = Flask(__name__)
+CORS(app, support_credentials=True)
 repo = repository()
 
 @app.route("/ping",methods=["GET"])
+@cross_origin(supports_credentials=True)
 def ping():
     return Response(response="Pong", status = 200)
 
 @app.route("/health",methods=["GET"])
+@cross_origin(supports_credentials=True)
 def health():
     return Response(response="healthy", status = 200)
 
@@ -30,6 +34,7 @@ Endpoint: v1/user
 Request body keys: username, email_address, password
 '''
 @app.route("/v1/user", methods=["POST"])
+@cross_origin(supports_credentials=True)
 def add_user():
   try:
     record = request.headers
@@ -48,6 +53,7 @@ Request body keys: token, username
 '''
 @app.route("/v1/user", methods=["GET"])
 @validation(repo)
+@cross_origin(supports_credentials=True)
 def get_user_info(): 
     try:
       return repo.GetUserInfo(request.json["username"], g.token)
@@ -59,6 +65,7 @@ Endpoint: v1/login
 Request body keys: token, username, password
 '''
 @app.route("/v1/login", methods=["POST"])
+@cross_origin(supports_credentials=True)
 def login():
     try:
       username = request.json["username"]
@@ -73,6 +80,7 @@ Endpoint: v1/books
 Request body keys: empty
 '''
 @app.route("/v1/books", methods=["GET"])
+@cross_origin(supports_credentials=True)
 def get_books(): 
     try:
       return repo.viewBooks()
@@ -85,6 +93,7 @@ Request body keys: token, bookTitle, cardId
 '''
 @app.route("/v1/checkin", methods=["POST"])
 @validation(repo)
+@cross_origin(supports_credentials=True)
 def checkin():
     try:
       book = repo.checkIn(request.json["bookTitle"], request.json["cardId"])
@@ -102,6 +111,7 @@ Request body keys: token, bookTitle, cardId
 '''
 @app.route("/v1/checkout", methods=["POST"])
 @validation(repo)
+@cross_origin(supports_credentials=True)
 def checkout():
     try:
       title = request.json['bookTitle']
